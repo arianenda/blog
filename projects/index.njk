@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+title: Projects
+permalink: /projects/
+eleventyExcludeFromCollections: true
+---
+
+<article class="blog-post">
+  <h1>Projects</h1>
+  <p>A collection of open source tools, experiments, and apps.</p>
+
+  <ul>
+    {% for project in collections.projects | reverse %}
+      <li>
+        <a href="{{ project.url | url }}">
+          {% if project.data.title %}
+            {{ project.data.title }}
+          {% else %}
+            <code>{{ project.url }}</code>
+          {% endif %}
+        </a>
+        <time datetime="{{ project.date | htmlDateString }}">
+          {{ project.date | readableDate }}
+        </time>
+      </li>
+    {% endfor %}
+  </ul>
+
+</article>

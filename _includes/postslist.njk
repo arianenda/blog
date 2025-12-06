@@ -1,8 +1,35 @@
-<ul>
+<ul class="post-list">
 {% for post in postslist | reverse %}
-  <li>
-    <a href="{{ post.url | url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
-    <time  datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+  <li class="post-wrapper">
+    <div class="post-item">
+
+      <div class="post-left-content">
+
+        <a href="{{ post.url | url }}" class="post-title-link">
+          {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
+        </a>
+        <time class="post-date" datetime="{{ post.date | htmlDateString }}">
+          {{ post.date | htmlDateString }}
+        </time>
+      </div>
+
+      <div class="post-tags-right">
+        {% if post.data.tags %}
+          {% for tag in post.data.tags %}
+            {%- if tag != "posts" and tag != "projects" -%}
+              <a href="{{ '/tags/' | url }}{{ tag | slugify }}/" class="post-tag-sm">#{{ tag }}</a>
+            {%- endif -%}
+          {% endfor %}
+        {% endif %}
+
+        {% if post.data.tech %}
+          {% for t in post.data.tech %}
+            <a href="{{ '/tags/' | url }}{{ t | slugify }}/" class="post-tag-sm">#{{ t }}</a>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    </div>
   </li>
 {% endfor %}
 </ul>

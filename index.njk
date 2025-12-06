@@ -1,18 +1,33 @@
 ---
-title: Title. Update me.
+title: EA.
 layout: layouts/home.njk
 description: Description. Update me.
 image: https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg
 date: Last Modified
 ---
 
+<div id="intro">
 <p>
-  This is a demo website based on 
-  <a href="https://www.industrialempathy.com/posts/eleventy-high-performance-blog/">eleventy-high-performance-blog</a>.
+  Hi, my name is Athariq Evan Arianenda. I have a deep interest in cybersecurity and low-level systems. My passion lies in designing, building, and analyzing a defense mechanisms for both prevention and protection at the lowest levels of a systems including operating systems and networks.
 </p>
+<p>
+My personal site is a collection of my thoughts, opinions, ideas, and personal projects that i'm working on. All opinions expressed here are my own.
+</p>
+<p> If you'd like to discuss about works and projects or just simply want to say hi, feel free to reach me at
+<a href="mailto:athariq@evanarianenda.com">athariq@evanarianenda.com</a>
+</p>
+</div>
 
 <div id="posts">
   <h2>Posts</h2>
   {% set postslist = collections.posts %}
   {% include "postslist.njk" %}
+</div>
+
+<div id="projects">
+  <h2>Projects</h2>
+  {% set postslist = collections.projects %}
+  {% include "postslist.njk" %}
+
+  // <p>See <a href="{{ '/projects/' | url }}">all projects</a>.</p>
 </div>
