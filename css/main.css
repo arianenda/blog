@@ -1,101 +1,75 @@
-/* Monospace Web Style - Horizontal Header Version with Search Modal */
-
+/**
+ * By Oskar Wickström
+ * Licensed under the MIT License (https://github.com/owickstrom/the-monospace-web/blob/main/LICENSE.md)
+ **/
 @import url('https://fonts.cdnfonts.com/css/jetbrains-mono-2');
 
-/* --- RESET --- */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-    display: block;
-}
-
-body { line-height: 1; }
-ol, ul { list-style: none; }
-blockquote, q { quotes: none; }
-blockquote:before, blockquote:after,
-q:before, q:after { content: none; }
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-/* --- MAIN STYLES --- */
 :root {
-    --font-family: "JetBrains Mono", monospace;
-    --line-height: 1.20rem;
-    --border-thickness: 2px;
-    --font-weight-normal: 500;
-    --font-weight-medium: 600;
-    --font-weight-bold: 800;
-    font-family: var(--font-family);
-    font-optical-sizing: auto;
-    font-weight: var(--font-weight-normal);
-    font-style: normal;
-    font-variant-numeric: tabular-nums lining-nums;
-    font-size: 16px;
-    --text-color: #000;
-    --text-color-alt: #666;
-    --background-color: #fff;
-    --background-color-alt: #eee;
-    --code-bg: #eaeaea;
+  --font-family: "JetBrains Mono", monospace;
+  --line-height: 1.20rem;
+  --border-thickness: 2px;
+
+  /* VINTAGE NOTEBOOK PAPER THEME */
+  --text-color: #3b3631;       /* Dark sepia/faded ink */
+  --text-color-alt: #7d766d;   /* Faded pencil grey */
+  --background-color: #fcf5e5; /* Old yellowish vintage paper */
+  --background-color-alt: #efe5d1; /* Darker paper for hovers/accents */
+
+  --font-weight-normal: 500;
+  --font-weight-medium: 600;
+  --font-weight-bold: 800;
+
+  font-family: var(--font-family);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  font-style: normal;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --text-color: #fff;
-        --text-color-alt: #aaa;
-        --background-color: #000;
-        --background-color-alt: #111;
-        --code-bg: #2a2a2a;
-    }
+  :root {
+    /* BLACKBOARD / DARK VINTAGE THEME */
+    --text-color: #eee8d5;       /* Chalk white */
+    --text-color-alt: #93a1a1;   /* Faded chalk */
+    --background-color: #262626; /* Dark charcoal/blackboard */
+    --background-color-alt: #333333; /* Lighter charcoal */
+  }
 }
 
-* { box-sizing: border-box; }
-* + * { margin-top: var(--line-height); }
+* {
+  box-sizing: border-box;
+}
+
+
+* + * {
+  margin-top: var(--line-height);
+}
 
 html {
-    display: flex;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    flex-direction: column;
-    align-items: center;
-    background: var(--background-color);
-    color: var(--text-color);
-    min-height: 100vh;
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  background: var(--background-color);
+  color: var(--text-color);
+  min-height: 100vh; /* Added to ensure full height */
 }
 
 body {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: var(--line-height) 2ch;
-    max-width: calc(min(80ch, round(down, 100%, 1ch)));
-    line-height: var(--line-height);
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: var(--line-height) 2ch;
+  max-width: calc(min(80ch, round(down, 100%, 1ch)));
+  line-height: var(--line-height);
+  overflow-x: hidden;
+  /* Ensure body takes available space for footer positioning */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
@@ -104,63 +78,422 @@ main {
 }
 
 @media screen and (max-width: 480px) {
-    :root { font-size: 14px; }
-    body { padding: var(--line-height) 1ch; }
+  :root {
+    font-size: 14px;
+  }
+  body {
+    padding: var(--line-height) 1ch;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: var(--font-weight-bold);
-    margin: calc(var(--line-height) * 2) 0 var(--line-height);
-    line-height: var(--line-height);
+  font-weight: var(--font-weight-bold);
+  margin: calc(var(--line-height) * 2) 0 var(--line-height);
+  line-height: var(--line-height);
 }
 
 h1 {
-    font-size: 2rem;
-    line-height: calc(2 * var(--line-height));
-    margin-bottom: calc(var(--line-height) * 2);
-    text-transform: uppercase;
+  font-size: 2rem;
+  line-height: calc(2 * var(--line-height));
+  margin-bottom: calc(var(--line-height) * 2);
+  text-transform: uppercase;
 }
-
 h2 {
-    font-size: 1rem;
-    text-transform: uppercase;
+  font-size: 1rem;
+  text-transform: uppercase;
 }
 
 hr {
-    position: relative;
-    display: block;
-    height: var(--line-height);
-    margin: calc(var(--line-height) * 1.5) 0;
-    border: none;
-    color: var(--text-color);
+  position: relative;
+  display: block;
+  height: var(--line-height);
+  margin: calc(var(--line-height) * 1.5) 0;
+  border: none;
+  color: var(--text-color);
 }
-
 hr:after {
-    display: block;
-    content: "";
-    position: absolute;
-    top: calc(var(--line-height) / 2 - var(--border-thickness));
-    left: 0;
-    width: 100%;
-    border-top: calc(var(--border-thickness) * 3) double var(--text-color);
-    height: 0;
+  display: block;
+  content: "";
+  position: absolute;
+  top: calc(var(--line-height) / 2 - var(--border-thickness));
+  left: 0;
+  width: 100%;
+  border-top: calc(var(--border-thickness) * 3) double var(--text-color);
+  height: 0;
 }
 
-a { text-decoration-thickness: var(--border-thickness); }
-a:link, a:visited { color: var(--text-color); }
-p { margin-bottom: var(--line-height); }
-strong { font-weight: var(--font-weight-bold); }
-em { font-style: italic; }
+a {
+  text-decoration-thickness: var(--border-thickness);
+}
 
-/* Replace the entire RESPONSIVE HEADER section in your main.css with this: */
+a:link, a:visited {
+  color: var(--text-color);
+}
 
-/* Replace the entire RESPONSIVE HEADER section in your main.css with this: */
+p {
+  margin-bottom: var(--line-height);
+}
+
+strong {
+  font-weight: var(--font-weight-bold);
+}
+em {
+  font-style: italic;
+}
+
+sub {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  vertical-align: sub;
+  line-height: 0;
+  width: calc(1ch / 0.75);
+  font-size: .75rem;
+}
+
+table {
+  position: relative;
+  top: calc(var(--line-height) / 2);
+  width: calc(round(down, 100%, 1ch));
+  border-collapse: collapse;
+  margin: 0 0 calc(var(--line-height) * 2);
+}
+
+th, td {
+  border: var(--border-thickness) solid var(--text-color);
+  padding:
+    calc((var(--line-height) / 2))
+    calc(1ch - var(--border-thickness) / 2)
+    calc((var(--line-height) / 2) - (var(--border-thickness)))
+  ;
+  line-height: var(--line-height);
+  vertical-align: top;
+  text-align: left;
+}
+table tbody tr:first-child > * {
+  padding-top: calc((var(--line-height) / 2) - var(--border-thickness));
+}
+
+
+th {
+  font-weight: 700;
+}
+.width-min {
+  width: 0%;
+}
+.width-auto {
+  width: 100%;
+}
+
+.header {
+  margin-bottom: calc(var(--line-height) * 2);
+}
+.header h1 {
+  margin: 0;
+}
+.header tr td:last-child {
+  text-align: right;
+}
+
+p {
+  word-break: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+img, video {
+  display: block;
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+}
+img {
+  font-style: italic;
+  color: var(--text-color-alt);
+}
+
+details {
+  border: var(--border-thickness) solid var(--text-color);
+  padding: calc(var(--line-height) - var(--border-thickness)) 1ch;
+  margin-bottom: var(--line-height);
+}
+
+summary {
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+details[open] summary {
+  margin-bottom: var(--line-height);
+}
+
+details ::marker {
+  display: inline-block;
+  content: '▶';
+  margin: 0;
+}
+details[open] ::marker {
+  content: '▼';
+}
+
+details :last-child {
+  margin-bottom: 0;
+}
+
+pre {
+  white-space: pre;
+  overflow-x: auto;
+  margin: var(--line-height) 0;
+  overflow-y: hidden;
+}
+figure pre {
+  margin: 0;
+}
+
+pre, code {
+  font-family: var(--font-family);
+}
+
+code {
+  font-weight: var(--font-weight-medium);
+}
+
+figure {
+  margin: calc(var(--line-height) * 2) 3ch;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+figcaption {
+  display: block;
+  font-style: italic;
+  margin-top: var(--line-height);
+}
+
+ul, ol {
+  padding: 0;
+  margin: 0 0 var(--line-height);
+}
+
+ul {
+  list-style-type: square;
+  padding: 0 0 0 2ch;
+}
+ol {
+  list-style-type: none;
+  counter-reset: item;
+  padding: 0;
+}
+ol ul,
+ol ol,
+ul ol,
+ul ul {
+  padding: 0 0 0 3ch;
+  margin: 0;
+}
+ol li:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+  font-weight: var(--font-weight-medium);
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
+li::marker {
+  line-height: 0;
+}
+
+::-webkit-scrollbar {
+    height: var(--line-height);
+}
+
+input, button, textarea {
+  border: var(--border-thickness) solid var(--text-color);
+  padding:
+    calc(var(--line-height) / 2 - var(--border-thickness))
+    calc(1ch - var(--border-thickness));
+  margin: 0;
+  font: inherit;
+  font-weight: inherit;
+  height: calc(var(--line-height) * 2);
+  width: auto;
+  overflow: visible;
+  background: var(--background-color);
+  color: var(--text-color);
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  display: inline-grid;
+  place-content: center;
+  vertical-align: top;
+  width: 2ch;
+  height: var(--line-height);
+  cursor: pointer;
+}
+input[type=checkbox]:checked:before,
+input[type=radio]:checked:before {
+  content: "";
+  width: 1ch;
+  height: calc(var(--line-height) / 2);
+  background: var(--text-color);
+}
+input[type=radio],
+input[type=radio]:before {
+  border-radius: 100%;
+}
+
+button:focus, input:focus {
+  --border-thickness: 3px;
+  outline: none;
+}
+
+input {
+  width: calc(round(down, 100%, 1ch));
+}
+::placeholder {
+  color: var(--text-color-alt);
+  opacity: 1;
+}
+::-ms-input-placeholder {
+  color: var(--text-color-alt);
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0
+}
+
+button {
+  text-transform: uppercase;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--background-color-alt);
+}
+button:active {
+  transform: translate(2px, 2px);
+}
+
+label {
+  display: block;
+  width: calc(round(down, 100%, 1ch));
+  height: auto;
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+label input {
+  width: 100%;
+}
+
+.tree, .tree ul {
+  position: relative;
+  padding-left: 0;
+  list-style-type: none;
+  line-height: var(--line-height);
+}
+.tree ul {
+  margin: 0;
+}
+.tree ul li {
+  position: relative;
+  padding-left: 1.5ch;
+  margin-left: 1.5ch;
+  border-left: var(--border-thickness) solid var(--text-color);
+}
+.tree ul li:before {
+  position: absolute;
+  display: block;
+  top: calc(var(--line-height) / 2);
+  left: 0;
+  content: "";
+  width: 1ch;
+  border-bottom: var(--border-thickness) solid var(--text-color);
+}
+.tree ul li:last-child {
+  border-left: none;
+}
+.tree ul li:last-child:after {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  content: "";
+  height: calc(var(--line-height) / 2);
+  border-left: var(--border-thickness) solid var(--text-color);
+}
+
+.grid {
+  --grid-cells: 0;
+  display: flex;
+  gap: 1ch;
+  width: calc(round(down, 100%, (1ch * var(--grid-cells)) - (1ch * var(--grid-cells) - 1)));
+  margin-bottom: var(--line-height);
+}
+
+.grid > *,
+.grid > input {
+  flex: 0 0 calc(round(down, (100% - (1ch * (var(--grid-cells) - 1))) / var(--grid-cells), 1ch));
+}
+.grid:has(> :last-child:nth-child(1)) { --grid-cells: 1; }
+.grid:has(> :last-child:nth-child(2)) { --grid-cells: 2; }
+.grid:has(> :last-child:nth-child(3)) { --grid-cells: 3; }
+.grid:has(> :last-child:nth-child(4)) { --grid-cells: 4; }
+.grid:has(> :last-child:nth-child(5)) { --grid-cells: 5; }
+.grid:has(> :last-child:nth-child(6)) { --grid-cells: 6; }
+.grid:has(> :last-child:nth-child(7)) { --grid-cells: 7; }
+.grid:has(> :last-child:nth-child(8)) { --grid-cells: 8; }
+.grid:has(> :last-child:nth-child(9)) { --grid-cells: 9; }
+
+/* DEBUG UTILITIES */
+
+.debug .debug-grid {
+  --color: color-mix(in srgb, var(--text-color) 10%, var(--background-color) 90%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image:
+    repeating-linear-gradient(var(--color) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(90deg, var(--color) 0 1px, transparent 1px 100%);
+  background-size: 1ch var(--line-height);
+  margin: 0;
+}
+
+.debug .off-grid {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.debug-toggle-label {
+  text-align: right;
+}
+
+/* ==========================================================================
+   CUSTOM SITE COMPONENTS (PRESERVED)
+   ========================================================================== */
 
 /* ─────── RESPONSIVE HEADER (TRUE DESKTOP LAYOUT ON ALL SCREENS) ─────── */
 
 .site-header {
   width: 100%;
   padding: 1.5rem 0;
+}
+
+/* Force Reset All Margins Inside Header to Fix Alignment */
+.site-header * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .header-pill {
@@ -184,9 +517,13 @@ em { font-style: italic; }
   gap: 0.5rem;
   flex-shrink: 0;
   z-index: 2;
+  height: 100%;
 }
 
 .header-left a {
+  display: flex; /* Helps vertically center text */
+  align-items: center;
+  height: 100%;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   font-size: 1.1rem;
@@ -194,6 +531,7 @@ em { font-style: italic; }
   color: inherit;
   white-space: nowrap;
   line-height: 1;
+  padding-top: 2px; /* Optical adjustment for Caps */
 }
 
 .header-center {
@@ -203,6 +541,10 @@ em { font-style: italic; }
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .nav-links {
@@ -210,13 +552,24 @@ em { font-style: italic; }
   gap: 1.8rem;
   pointer-events: auto;
   align-items: center;
+  /* RESET GLOBAL UL STYLES FOR ALIGNMENT */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
 }
 
 .nav-links li {
   margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .nav-links a {
+  display: flex; /* Ensures the link box respects alignment */
+  align-items: center;
+  height: 100%;
   color: var(--text-color-alt);
   text-decoration: none;
   text-transform: uppercase;
@@ -225,6 +578,7 @@ em { font-style: italic; }
   transition: color 0.2s;
   line-height: 1;
   white-space: nowrap;
+  padding-top: 2px; /* Optical adjustment for Caps */
 }
 
 .nav-links a:hover {
@@ -239,6 +593,7 @@ em { font-style: italic; }
   min-width: 24px;
   flex-shrink: 0;
   z-index: 2;
+  height: 100%;
 }
 
 .search-icon-btn {
@@ -413,57 +768,6 @@ em { font-style: italic; }
   }
 }
 
-/* ─────── ALTERNATIVE: HAMBURGER MENU FOR VERY SMALL SCREENS ─────── */
-
-/* Uncomment this section if you want a hamburger menu instead */
-
-/*
- @ m*edia screen and (max-width: 600px) {
- .header-center {
- position: static;
- transform: none;
- display: none;
- }
-
- .nav-links {
- display: none;
- }
-
- .hamburger-btn {
- display: block !important;
- background: none;
- border: none;
- padding: 0;
- cursor: pointer;
- width: 24px;
- height: 24px;
- color: var(--text-color);
- }
-
- .mobile-nav {
- display: none;
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100vh;
- background: var(--background-color);
- z-index: 9999;
- padding: 2rem;
- }
-
- .mobile-nav.active {
- display: flex;
- flex-direction: column;
- gap: 1.5rem;
- }
- }
-
- .hamburger-btn {
- display: none;
- }
- */
-
 /* ─────── SEARCH MODAL WITH PERFECT ALIGNMENT ─────── */
 .search-modal {
     position: fixed;
@@ -606,8 +910,6 @@ em { font-style: italic; }
     min-height: 200px;
     max-height: 50vh;
 }
-
-/* Add this to your main_final_fixed.css - SEARCH RESULT ITEM UPDATES */
 
 /* ─────── SEARCH RESULT ITEMS WITH DATE LAYOUT ─────── */
 
@@ -768,67 +1070,10 @@ em { font-style: italic; }
   .search-result-item {
     padding: 1rem;
   }
-
-  /* Header stays horizontal - already handled above */
 }
 
-/* --- TABLES --- */
-table {
-    position: relative;
-    top: calc(var(--line-height) / 2);
-    width: calc(round(down, 100%, 1ch));
-    border-collapse: collapse;
-    margin: 0 0 calc(var(--line-height) * 2);
-}
 
-th, td {
-    border: var(--border-thickness) solid var(--text-color);
-    padding: calc((var(--line-height) / 2)) calc(1ch - var(--border-thickness) / 2) calc((var(--line-height) / 2) - (var(--border-thickness)));
-    line-height: var(--line-height);
-    vertical-align: top;
-    text-align: left;
-}
-
-table tbody tr:first-child > * {
-    padding-top: calc((var(--line-height) / 2) - var(--border-thickness));
-}
-
-th { font-weight: 700; }
-
-/* --- STANDARD ELEMENTS --- */
-p {
-    word-break: break-word;
-    hyphens: auto;
-}
-
-img, video {
-    display: block;
-    width: 100%;
-    object-fit: contain;
-    overflow: hidden;
-}
-
-img {
-    font-style: italic;
-    color: var(--text-color-alt);
-}
-
-details {
-    border: var(--border-thickness) solid var(--text-color);
-    padding: calc(var(--line-height) - var(--border-thickness)) 1ch;
-    margin-bottom: var(--line-height);
-}
-
-summary {
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-}
-
-details[open] summary {
-    margin-bottom: var(--line-height);
-}
-
-/* --- CODE BLOCKS --- */
+/* --- CODE BLOCKS (PRISM) --- */
 pre[class*="language-"] {
     background-color: #1e1e1e !important;
     color: #d4d4d4 !important;
@@ -897,6 +1142,7 @@ pre[class*="language-"] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center; /* Center content within left column */
     gap: 0.2em;
 }
 
@@ -923,6 +1169,7 @@ pre[class*="language-"] {
     display: flex;
     gap: 0.8ch;
     flex-wrap: wrap;
+    align-items: center; /* Ensure tags themselves are centered if multiple lines */
 }
 
 .post-tag-sm {
@@ -940,7 +1187,7 @@ pre[class*="language-"] {
 @media (min-width: 700px) {
     .post-list a.post-item {
         flex-direction: row;
-        align-items: center;
+        align-items: center !important; /* Force vertical centering of Tags relative to Title/Date */
         justify-content: space-between;
         gap: 1em;
     }
@@ -949,6 +1196,8 @@ pre[class*="language-"] {
         margin-left: auto;
         justify-content: flex-end;
         max-width: 40%;
+        margin-top: 0; /* Remove any top margin to ensure true center */
+        align-self: center !important; /* Explicitly tell tags to center themselves */
     }
 }
 
@@ -964,118 +1213,88 @@ pre[class*="language-"] {
     letter-spacing: -0.02em;
 }
 
-/* --- FOOTER --- */
+/* --- FOOTER (PERFECTLY CENTERED HORIZONTAL) --- */
 .blog-footer {
-    margin-top: 1em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    border-top: var(--border-thickness) solid var(--text-color);
+    margin-top: calc(var(--line-height) * 4);
+    /* Minimal top padding, just enough to separate from dashed border */
+    padding-top: var(--line-height);
+    /* Very minimal bottom padding */
+    padding-bottom: var(--line-height);
+    /* Dashed border for vintage feel */
+    border-top: var(--border-thickness) dashed var(--text-color-alt);
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    /* Force horizontal layout by default */
+    flex-direction: row;
+    justify-content: center; /* Center everything horizontally */
+    align-items: center;     /* Center everything vertically */
     width: 100%;
-}
-
-.footer-left > *,
-.footer-right > * {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    gap: 2rem; /* Space between copyright group and links group */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 .footer-left {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2em;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
 }
 
 .footer-headline {
-    font-size: 1.1em;
-    font-weight: var(--font-weight-bold);
-    color: var(--text-color-alt);
-    border: none;
-    font-style: normal;
-    line-height: 1;
+    font-size: 0.9em;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color-alt); /* More subtle color */
+    margin: 0;
+    text-transform: none; /* Less aggressive */
+    letter-spacing: 0;
+    line-height: 1; /* Ensure consistent height */
 }
 
+/* Hide email if present, or incorporate it subtly */
 .footer-email {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.95em;
-    border-bottom: 1px solid transparent;
-    line-height: 1.2;
-    margin-top: 0.2em !important;
-}
-
-.footer-email:hover {
-    border-bottom-color: var(--text-color);
+    display: none;
 }
 
 .footer-right {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.2em;
-    text-align: right;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
 }
 
 .footer-right a {
-    color: var(--text-color);
+    color: var(--text-color-alt);
     text-decoration: none;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-medium);
     font-size: 0.9em;
     text-transform: uppercase;
-    line-height: 1;
-}
-
-.footer-right a + a {
-    margin-top: 0.2em !important;
+    position: relative;
+    transition: color 0.2s;
+    line-height: 1; /* Fix vertical alignment */
 }
 
 .footer-right a:hover {
-    text-decoration: underline;
+    color: var(--text-color);
 }
 
+/* Keep minimal horizontal layout even on mobile, just smaller font */
 @media screen and (max-width: 600px) {
+    .blog-footer {
+        margin-top: calc(var(--line-height) * 2);
+        padding-top: calc(var(--line-height) * 0.8);
+        padding-bottom: calc(var(--line-height) * 0.8);
+    }
+
     .footer-content {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1em;
+        gap: 0.8rem;
     }
 
-    .footer-right {
-        align-items: flex-start;
-        text-align: left;
-        width: 100%;
+    .footer-headline, .footer-right a {
+        font-size: 0.8em;
     }
-
-    .footer-right a + a {
-        margin-top: 0.2em !important;
-    }
-}
-
-/* --- DEBUG GRID --- */
-.debug .debug-grid {
-    --color: color-mix(in srgb, var(--text-color) 10%, var(--background-color) 90%);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    background-image:
-        repeating-linear-gradient(var(--color) 0 1px, transparent 1px 100%),
-        repeating-linear-gradient(90deg, var(--color) 0 1px, transparent 1px 100%);
-    background-size: 1ch var(--line-height);
-    margin: 0;
-}
-
-.debug-toggle-label {
-    text-align: right;
-    margin-top: 2em;
 }
 
 /* --- DARK MODE OVERRIDES --- */
@@ -1095,9 +1314,8 @@ pre[class*="language-"] {
 }
 
 /* ═══════════════════════════════════════════════════════════
- *  MOBILE-OPTIMIZED IMPROVEMENTS (AGGRESSIVE VERSION)
- *  Replace EVERYTHING after line 750 in your main.css with this
- *  ═══════════════════════════════════════════════════════════ */
+ * MOBILE-OPTIMIZED IMPROVEMENTS
+ * ═══════════════════════════════════════════════════════════ */
 
 /* ─────── BASE MOBILE IMPROVEMENTS ─────── */
 @media screen and (max-width: 600px) {
@@ -1267,34 +1485,13 @@ pre[class*="language-"] {
   }
 }
 
-/* ─────── FOOTER ─────── */
+/* ─────── FOOTER (MOBILE ADJUSTMENTS) ─────── */
 @media screen and (max-width: 600px) {
   .blog-footer {
     margin-top: calc(var(--line-height) * 2) !important;
-    padding-top: calc(var(--line-height) * 1.5) !important;
+    padding-top: calc(var(--line-height) * 0.8) !important;
   }
-
-  .footer-content {
-    flex-direction: column !important;
-    gap: 1.5em !important;
-    align-items: flex-start !important;
-  }
-
-  .footer-headline {
-    font-size: 1rem !important;
-    line-height: 1.3 !important;
-  }
-
-  .footer-email {
-    font-size: 0.9rem !important;
-    word-break: break-all !important;
-  }
-
-  .footer-right {
-    width: 100% !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-  }
+  /* Footer content is now handled by the main media queries above */
 }
 
 /* ─────── BLOG POST CONTENT ─────── */
