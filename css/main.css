@@ -9,12 +9,6 @@
   --line-height: 1.20rem;
   --border-thickness: 2px;
 
-  /* VINTAGE NOTEBOOK PAPER THEME */
-  --text-color: #3b3631;       /* Dark sepia/faded ink */
-  --text-color-alt: #7d766d;   /* Faded pencil grey */
-  --background-color: #fcf5e5; /* Old yellowish vintage paper */
-  --background-color-alt: #efe5d1; /* Darker paper for hovers/accents */
-
   --font-weight-normal: 500;
   --font-weight-medium: 600;
   --font-weight-bold: 800;
@@ -25,15 +19,38 @@
   font-style: normal;
   font-variant-numeric: tabular-nums lining-nums;
   font-size: 16px;
+
+  /* Default Light Theme (Vintage Paper) */
+  --text-color: #3b3631;
+  --text-color-alt: #7d766d;
+  --background-color: #fcf5e5;
+  --background-color-alt: #efe5d1;
+  --icon-sun-display: none;
+  --icon-moon-display: block;
 }
 
+/* Dark Theme Override */
+[data-theme="dark"] {
+  /* DARK WARM & SOFT THEME */
+  /* Deep warm charcoal background with soft ivory text - easier on the eyes */
+  --text-color: #e6e0d4;           /* Warm Ivory */
+  --text-color-alt: #9c948b;       /* Muted Warm Grey */
+  --background-color: #1c1b19;     /* Deep Warm Dark (Espresso/Charcoal) */
+  --background-color-alt: #2b2825; /* Lighter Warm Dark for hovers */
+
+  --icon-sun-display: block;
+  --icon-moon-display: none;
+}
+
+/* System Preference Fallback (only if no data-theme is set) */
 @media (prefers-color-scheme: dark) {
-  :root {
-    /* BLACKBOARD / DARK VINTAGE THEME */
-    --text-color: #eee8d5;       /* Chalk white */
-    --text-color-alt: #93a1a1;   /* Faded chalk */
-    --background-color: #262626; /* Dark charcoal/blackboard */
-    --background-color-alt: #333333; /* Lighter charcoal */
+  :root:not([data-theme]) {
+    --text-color: #e6e0d4;
+    --text-color-alt: #9c948b;
+    --background-color: #1c1b19;
+    --background-color-alt: #2b2825;
+    --icon-sun-display: block;
+    --icon-moon-display: none;
   }
 }
 
@@ -55,7 +72,8 @@ html {
   align-items: center;
   background: var(--background-color);
   color: var(--text-color);
-  min-height: 100vh; /* Added to ensure full height */
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -66,7 +84,6 @@ body {
   max-width: calc(min(80ch, round(down, 100%, 1ch)));
   line-height: var(--line-height);
   overflow-x: hidden;
-  /* Ensure body takes available space for footer positioning */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -480,17 +497,16 @@ label input {
 }
 
 /* ==========================================================================
-   CUSTOM SITE COMPONENTS (PRESERVED)
+   CUSTOM SITE COMPONENTS
    ========================================================================== */
 
-/* ─────── RESPONSIVE HEADER (TRUE DESKTOP LAYOUT ON ALL SCREENS) ─────── */
+/* ─────── RESPONSIVE HEADER ─────── */
 
 .site-header {
   width: 100%;
   padding: 1.5rem 0;
 }
 
-/* Force Reset All Margins Inside Header to Fix Alignment */
 .site-header * {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -509,6 +525,7 @@ label input {
   background: var(--background-color);
   box-shadow: 6px 6px 0 rgba(0,0,0,0.15);
   position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .header-left {
@@ -521,7 +538,7 @@ label input {
 }
 
 .header-left a {
-  display: flex; /* Helps vertically center text */
+  display: flex;
   align-items: center;
   height: 100%;
   font-weight: var(--font-weight-bold);
@@ -531,7 +548,7 @@ label input {
   color: inherit;
   white-space: nowrap;
   line-height: 1;
-  padding-top: 2px; /* Optical adjustment for Caps */
+  padding-top: 2px;
 }
 
 .header-center {
@@ -552,7 +569,6 @@ label input {
   gap: 1.8rem;
   pointer-events: auto;
   align-items: center;
-  /* RESET GLOBAL UL STYLES FOR ALIGNMENT */
   margin: 0;
   padding: 0;
   list-style: none;
@@ -567,7 +583,7 @@ label input {
 }
 
 .nav-links a {
-  display: flex; /* Ensures the link box respects alignment */
+  display: flex;
   align-items: center;
   height: 100%;
   color: var(--text-color-alt);
@@ -578,7 +594,7 @@ label input {
   transition: color 0.2s;
   line-height: 1;
   white-space: nowrap;
-  padding-top: 2px; /* Optical adjustment for Caps */
+  padding-top: 2px;
 }
 
 .nav-links a:hover {
@@ -589,7 +605,7 @@ label input {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: 0.8rem; /* Added space between buttons */
   min-width: 24px;
   flex-shrink: 0;
   z-index: 2;
@@ -622,131 +638,52 @@ label input {
   display: block;
 }
 
-/* ─────── PROGRESSIVE SCALING (MAINTAINS LAYOUT) ─────── */
+/* Theme Toggle Specifics */
+.theme-toggle-btn .sun-icon {
+  display: var(--icon-sun-display);
+}
+.theme-toggle-btn .moon-icon {
+  display: var(--icon-moon-display);
+}
 
-/* Tablet: Scale down slightly */
+/* ─────── PROGRESSIVE SCALING ─────── */
+
 @media screen and (max-width: 900px) {
   .header-pill {
     padding: 0 1.2rem;
   }
-
   .nav-links {
     gap: 1.4rem;
   }
-
   .nav-links a {
     font-size: 0.78rem;
   }
-
   .header-left a {
     font-size: 1rem;
   }
 }
 
-/* Smaller tablet: More compact */
 @media screen and (max-width: 750px) {
   .header-pill {
     padding: 0 1rem;
     height: 2.8rem;
   }
-
   .nav-links {
     gap: 1rem;
   }
-
   .nav-links a {
     font-size: 0.72rem;
   }
-
   .header-left a {
     font-size: 0.95rem;
   }
-}
 
-/* Mobile: Compact but maintains desktop structure */
-@media screen and (max-width: 600px) {
-  .site-header {
-    padding: 1.2rem 0;
-  }
-
-  .header-pill {
-    padding: 0 1rem;
-    height: 3rem;
-  }
-
-  .nav-links {
-    gap: 0.9rem;
-  }
-
-  .nav-links a {
-    font-size: 0.75rem;
-    letter-spacing: 0;
-  }
-
-  .header-left a {
-    font-size: 1rem;
-  }
-}
-
-/* Very small mobile: Minimal sizing */
-@media screen and (max-width: 480px) {
-  .header-pill {
-    padding: 0 0.9rem;
-    height: 2.8rem;
-  }
-
-  .nav-links {
-    gap: 0.7rem;
-  }
-
-  .nav-links a {
-    font-size: 0.68rem;
-  }
-
-  .header-left a {
-    font-size: 0.92rem;
-  }
-
-  .search-icon-btn {
-    width: 19px;
-    height: 19px;
-  }
-
-  .search-icon-btn svg {
-    width: 19px;
-    height: 19px;
-  }
-}
-
-/* Extra small: Ultra minimal but still desktop layout */
-@media screen and (max-width: 380px) {
-  .header-pill {
-    padding: 0 0.6rem;
-    height: 2.3rem;
-  }
-
-  .nav-links {
-    gap: 0.4rem;
-  }
-
-  .nav-links a {
-    font-size: 0.55rem;
-  }
-
-  .header-left a {
-    font-size: 0.75rem;
-  }
-}
-
-/* ─────── CRITICAL: OVERRIDE ANY CONFLICTING MOBILE STYLES ─────── */
-@media screen and (max-width: 750px) {
   /* Force horizontal layout - override any vertical stacking */
   .header-pill {
     flex-direction: row !important;
     align-items: center !important;
     gap: 0 !important;
   }
-
   .header-center {
     position: absolute !important;
     left: 50% !important;
@@ -754,21 +691,79 @@ label input {
     transform: translate(-50%, -50%) !important;
     order: initial !important;
   }
-
   .nav-links {
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     order: initial !important;
     justify-content: center !important;
   }
-
   .header-left,
   .header-right {
     position: relative !important;
   }
 }
 
-/* ─────── SEARCH MODAL WITH PERFECT ALIGNMENT ─────── */
+@media screen and (max-width: 600px) {
+  .site-header {
+    padding: 1.2rem 0;
+  }
+  .header-pill {
+    padding: 0 1rem;
+    height: 3rem;
+  }
+  .nav-links {
+    gap: 0.9rem;
+  }
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0;
+  }
+  .header-left a {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header-pill {
+    padding: 0 0.9rem;
+    height: 2.8rem;
+  }
+  .nav-links {
+    gap: 0.7rem;
+  }
+  .nav-links a {
+    font-size: 0.68rem;
+  }
+  .header-left a {
+    font-size: 0.92rem;
+  }
+  .search-icon-btn {
+    width: 19px;
+    height: 19px;
+  }
+  .search-icon-btn svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .header-pill {
+    padding: 0 0.6rem;
+    height: 2.3rem;
+  }
+  .nav-links {
+    gap: 0.4rem;
+  }
+  .nav-links a {
+    font-size: 0.55rem;
+  }
+  .header-left a {
+    font-size: 0.75rem;
+  }
+}
+
+/* ─────── SEARCH MODAL ─────── */
 .search-modal {
     position: fixed;
     top: 0;
@@ -828,14 +823,13 @@ label input {
     }
 }
 
-/* FIXED: Modal header with perfect alignment and minimal padding */
 .search-modal-header {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 0.8rem 1rem;  /* Reduced from 1.5rem */
+    padding: 0.8rem 1rem;
     border-bottom: var(--border-thickness) solid var(--text-color);
-    min-height: 3rem;  /* Matches header-pill height for consistency */
+    min-height: 3rem;
 }
 
 .search-modal-input-wrapper {
@@ -845,7 +839,6 @@ label input {
     gap: 0.8rem;
 }
 
-/* FIXED: Search icon alignment */
 .search-modal-icon {
     color: var(--text-color-alt);
     flex-shrink: 0;
@@ -854,19 +847,18 @@ label input {
     display: block;
 }
 
-/* FIXED: Input text alignment */
 .search-modal-input {
     flex: 1;
     background: transparent;
     border: none;
     outline: none;
     font-family: var(--font-family);
-    font-size: 1rem;  /* Reduced from 1.1rem */
+    font-size: 1rem;
     font-weight: var(--font-weight-medium);
     color: var(--text-color);
     padding: 0;
     margin: 0;
-    line-height: 1.4;  /* Consistent line-height */
+    line-height: 1.4;
 }
 
 .search-modal-input::placeholder {
@@ -874,11 +866,10 @@ label input {
     opacity: 0.7;
 }
 
-/* FIXED: Close button alignment */
 .search-modal-close {
     background: none;
     border: none;
-    padding: 0.2rem;  /* Reduced from 0.3rem */
+    padding: 0.2rem;
     margin: 0;
     cursor: pointer;
     color: var(--text-color-alt);
@@ -888,8 +879,8 @@ label input {
     border-radius: 6px;
     transition: all 0.2s;
     flex-shrink: 0;
-    width: 28px;  /* Fixed size */
-    height: 28px;  /* Fixed size */
+    width: 28px;
+    height: 28px;
 }
 
 .search-modal-close:hover {
@@ -911,7 +902,7 @@ label input {
     max-height: 50vh;
 }
 
-/* ─────── SEARCH RESULT ITEMS WITH DATE LAYOUT ─────── */
+/* ─────── SEARCH RESULT ITEMS ─────── */
 
 .search-result-item {
   display: block;
@@ -931,7 +922,6 @@ label input {
   border-bottom: none;
 }
 
-/* Date above title */
 .search-result-date {
   font-size: 0.75rem;
   color: var(--text-color-alt);
@@ -942,7 +932,6 @@ label input {
   display: block;
 }
 
-/* Title in the middle */
 .search-result-title {
   font-weight: var(--font-weight-bold);
   font-size: 1.05rem;
@@ -951,7 +940,6 @@ label input {
   line-height: 1.3;
 }
 
-/* Excerpt below title */
 .search-result-excerpt {
   font-size: 0.9rem;
   color: var(--text-color-alt);
@@ -959,7 +947,6 @@ label input {
   margin-top: 0.5rem;
 }
 
-/* Tags if you want to show them */
 .search-result-tags {
   display: flex;
   gap: 0.5rem;
@@ -978,29 +965,25 @@ label input {
   font-weight: var(--font-weight-medium);
 }
 
-/* Mobile adjustments */
 @media screen and (max-width: 750px) {
   .search-result-item {
     padding: 1rem;
   }
-
   .search-result-date {
     font-size: 0.7rem;
     margin-bottom: 0.3rem;
   }
-
   .search-result-title {
     font-size: 1rem;
     margin-bottom: 0.4rem;
   }
-
   .search-result-excerpt {
     font-size: 0.85rem;
   }
 }
 
 .search-modal-footer {
-    padding: 0.8rem 1rem;  /* Reduced from 1rem 1.5rem */
+    padding: 0.8rem 1rem;
     border-top: var(--border-thickness) solid var(--text-color);
     display: flex;
     align-items: center;
@@ -1026,7 +1009,6 @@ label input {
     text-transform: uppercase;
 }
 
-/* Empty state */
 .search-modal-empty {
     display: flex;
     flex-direction: column;
@@ -1047,28 +1029,20 @@ label input {
     margin: 0;
 }
 
-/* Search modal mobile adjustments only */
 @media screen and (max-width: 750px) {
   .search-modal {
     padding: 5vh 0.5rem;
   }
-
   .search-modal-content {
     border-radius: 8px;
     max-height: 85vh;
   }
-
   .search-modal-header {
     padding: 0.7rem 0.8rem;
     min-height: 2.5rem;
   }
-
   .search-modal-input {
     font-size: 0.95rem;
-  }
-
-  .search-result-item {
-    padding: 1rem;
   }
 }
 
@@ -1142,7 +1116,7 @@ pre[class*="language-"] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center; /* Center content within left column */
+    justify-content: center;
     gap: 0.2em;
 }
 
@@ -1169,7 +1143,7 @@ pre[class*="language-"] {
     display: flex;
     gap: 0.8ch;
     flex-wrap: wrap;
-    align-items: center; /* Ensure tags themselves are centered if multiple lines */
+    align-items: center;
 }
 
 .post-tag-sm {
@@ -1187,7 +1161,7 @@ pre[class*="language-"] {
 @media (min-width: 700px) {
     .post-list a.post-item {
         flex-direction: row;
-        align-items: center !important; /* Force vertical centering of Tags relative to Title/Date */
+        align-items: center !important;
         justify-content: space-between;
         gap: 1em;
     }
@@ -1196,12 +1170,12 @@ pre[class*="language-"] {
         margin-left: auto;
         justify-content: flex-end;
         max-width: 40%;
-        margin-top: 0; /* Remove any top margin to ensure true center */
-        align-self: center !important; /* Explicitly tell tags to center themselves */
+        margin-top: 0;
+        align-self: center !important;
     }
 }
 
-/* --- HOMEPAGE HEADLINES --- */
+/* --- HEADLINES --- */
 #posts h2,
 #intro h2,
 #projects h2 {
@@ -1213,26 +1187,22 @@ pre[class*="language-"] {
     letter-spacing: -0.02em;
 }
 
-/* --- FOOTER (PERFECTLY CENTERED HORIZONTAL) --- */
+/* --- FOOTER --- */
 .blog-footer {
     margin-top: calc(var(--line-height) * 4);
-    /* Minimal top padding, just enough to separate from dashed border */
     padding-top: var(--line-height);
-    /* Very minimal bottom padding */
     padding-bottom: var(--line-height);
-    /* Dashed border for vintage feel */
     border-top: var(--border-thickness) dashed var(--text-color-alt);
 }
 
 .footer-content {
     display: flex;
-    /* Force horizontal layout by default */
     flex-direction: row;
-    justify-content: center; /* Center everything horizontally */
-    align-items: center;     /* Center everything vertically */
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    gap: 2rem; /* Space between copyright group and links group */
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .footer-left {
@@ -1245,14 +1215,13 @@ pre[class*="language-"] {
 .footer-headline {
     font-size: 0.9em;
     font-weight: var(--font-weight-medium);
-    color: var(--text-color-alt); /* More subtle color */
+    color: var(--text-color-alt);
     margin: 0;
-    text-transform: none; /* Less aggressive */
+    text-transform: none;
     letter-spacing: 0;
-    line-height: 1; /* Ensure consistent height */
+    line-height: 1;
 }
 
-/* Hide email if present, or incorporate it subtly */
 .footer-email {
     display: none;
 }
@@ -1272,14 +1241,13 @@ pre[class*="language-"] {
     text-transform: uppercase;
     position: relative;
     transition: color 0.2s;
-    line-height: 1; /* Fix vertical alignment */
+    line-height: 1;
 }
 
 .footer-right a:hover {
     color: var(--text-color);
 }
 
-/* Keep minimal horizontal layout even on mobile, just smaller font */
 @media screen and (max-width: 600px) {
     .blog-footer {
         margin-top: calc(var(--line-height) * 2);
@@ -1297,19 +1265,34 @@ pre[class*="language-"] {
     }
 }
 
-/* --- DARK MODE OVERRIDES --- */
+/* --- DARK MODE ADJUSTMENTS --- */
+/* These adjust specific UI elements when dark mode is active via CSS class or media query */
+[data-theme="dark"] .post-list a.post-item,
 @media (prefers-color-scheme: dark) {
-    .post-list a.post-item {
-        background: #0d0d0d;
-        border-color: #444;
+    :root:not([data-theme="light"]) .post-list a.post-item {
+        background: #232120; /* Slightly lighter than main bg */
+        border-color: #555;
     }
+}
 
-    .post-list a.post-item:hover {
-        box-shadow: 6px 6px 0 rgba(255,255,255,0.08);
+[data-theme="dark"] .post-list a.post-item:hover,
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .post-list a.post-item:hover {
+        box-shadow: 6px 6px 0 rgba(230, 224, 212, 0.15); /* Warm ivory shadow */
     }
+}
 
-    .search-modal-overlay {
-        background: rgba(0, 0, 0, 0.8);
+[data-theme="dark"] .search-modal-overlay,
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .search-modal-overlay {
+        background: rgba(28, 27, 25, 0.85); /* Warm dark overlay */
+    }
+}
+
+[data-theme="dark"] .header-pill,
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .header-pill {
+        box-shadow: 6px 6px 0 rgba(230, 224, 212, 0.15); /* Warm ivory shadow for header */
     }
 }
 
@@ -1317,14 +1300,12 @@ pre[class*="language-"] {
  * MOBILE-OPTIMIZED IMPROVEMENTS
  * ═══════════════════════════════════════════════════════════ */
 
-/* ─────── BASE MOBILE IMPROVEMENTS ─────── */
 @media screen and (max-width: 600px) {
   body {
     padding: var(--line-height) 3ch !important;
     font-size: 15px !important;
   }
 
-  /* Typography fixes */
   h1 {
     font-size: 1.75rem !important;
     line-height: calc(2 * var(--line-height)) !important;
@@ -1343,10 +1324,7 @@ pre[class*="language-"] {
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
   }
-}
 
-/* ─────── POST LIST - FORCE SINGLE COLUMN ─────── */
-@media screen and (max-width: 600px) {
   .post-list {
     display: flex !important;
     flex-direction: column !important;
@@ -1410,41 +1388,19 @@ pre[class*="language-"] {
     white-space: nowrap !important;
     margin: 0 !important;
   }
-}
 
-/* ─────── FORCE OVERRIDE MIN-WIDTH 700PX RULE ─────── */
-@media screen and (max-width: 700px) {
-  .post-list a.post-item {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    gap: 0.8em !important;
-  }
-
-  .post-tags-right {
-    margin-left: 0 !important;
-    max-width: 100% !important;
-    justify-content: flex-start !important;
-  }
-}
-
-/* ─────── HOMEPAGE SECTIONS ─────── */
-@media screen and (max-width: 600px) {
   #posts h2,
   #intro h2,
   #projects h2 {
-  font-size: 1.3rem !important;
-  margin-top: calc(var(--line-height) * 2) !important;
-  margin-bottom: calc(var(--line-height) * 1.2) !important;
+    font-size: 1.3rem !important;
+    margin-top: calc(var(--line-height) * 2) !important;
+    margin-bottom: calc(var(--line-height) * 1.2) !important;
   }
 
   main > section {
     margin-bottom: calc(var(--line-height) * 2) !important;
   }
-}
 
-/* ─────── CODE BLOCKS ─────── */
-@media screen and (max-width: 600px) {
   pre[class*="language-"] {
     font-size: 0.8em !important;
     padding: 0.8em !important;
@@ -1458,10 +1414,7 @@ pre[class*="language-"] {
     font-size: 0.85em !important;
     padding: 0.15em 0.4em !important;
   }
-}
 
-/* ─────── TABLES ─────── */
-@media screen and (max-width: 600px) {
   table {
     font-size: 0.85rem !important;
     display: block !important;
@@ -1473,29 +1426,19 @@ pre[class*="language-"] {
   th, td {
     padding: 0.5em 0.8em !important;
   }
-}
 
-/* ─────── IMAGES ─────── */
-@media screen and (max-width: 600px) {
   img, video {
     margin: var(--line-height) 0 !important;
     border-radius: 6px !important;
     max-width: 100% !important;
     height: auto !important;
   }
-}
 
-/* ─────── FOOTER (MOBILE ADJUSTMENTS) ─────── */
-@media screen and (max-width: 600px) {
   .blog-footer {
     margin-top: calc(var(--line-height) * 2) !important;
     padding-top: calc(var(--line-height) * 0.8) !important;
   }
-  /* Footer content is now handled by the main media queries above */
-}
 
-/* ─────── BLOG POST CONTENT ─────── */
-@media screen and (max-width: 600px) {
   .blog-post {
     margin-bottom: calc(var(--line-height) * 2) !important;
   }
@@ -1515,10 +1458,7 @@ pre[class*="language-"] {
     margin-bottom: calc(var(--line-height) * 0.5) !important;
     line-height: 1.5 !important;
   }
-}
 
-/* ─────── PREVENT HORIZONTAL SCROLL ─────── */
-@media screen and (max-width: 600px) {
   html, body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -1530,10 +1470,7 @@ pre[class*="language-"] {
     width: 100% !important;
     max-width: 100% !important;
   }
-}
 
-/* ─────── SEARCH MODAL MOBILE ─────── */
-@media screen and (max-width: 600px) {
   .search-modal {
     padding: 5vh 0.5rem !important;
   }
@@ -1556,7 +1493,21 @@ pre[class*="language-"] {
   }
 }
 
-/* ─────── VERY SMALL MOBILE ─────── */
+@media screen and (max-width: 700px) {
+  .post-list a.post-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 0.8em !important;
+  }
+
+  .post-tags-right {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
 @media screen and (max-width: 480px) {
   body {
     font-size: 14px !important;
