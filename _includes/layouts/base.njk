@@ -118,17 +118,22 @@
       <div class="footer-content">
 
         <div class="footer-left">
-          <p class="footer-headline">Genius admires simplicity, the foolest one admires complexity</p>
-          <a href="mailto:youremail@example.com" class="footer-email">youremail@example.com</a>
+          <span class="footer-text">&copy; <span id="copyright-year">2025</span> Copyright and made by Evan</span>
         </div>
 
         <div class="footer-right">
           <a href="{{ metadata.feed.path | url }}">RSS Feed</a>
+          <span class="separator">|</span>
           <a href="{{ '/sitemap.xml' | url }}">Sitemap</a>
         </div>
 
       </div>
     </footer>
+
+    <script>
+      // Automatically set the current year
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
 
     <script src="/js/search.js" defer></script>
 
