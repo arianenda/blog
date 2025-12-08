@@ -9,9 +9,17 @@
     {% endif %}
 
     <div class="post-content-wrapper">
-      <time class="post-date-label" datetime="{{ post.date | htmlDateString }}">
-        {{ post.date | longDate }}
-      </time>
+      {% if post.data.tags %}
+        {% set firstTag = '' %}
+        {% for tag in post.data.tags %}
+          {%- if tag != "posts" and tag != "projects" and firstTag == '' -%}
+            {% set firstTag = tag %}
+          {%- endif -%}
+        {% endfor %}
+        {% if firstTag %}
+          <a href="{{ '/tags/' | url }}{{ firstTag | slugify }}/" class="post-date-label">#{{ firstTag }}</a>
+        {% endif %}
+      {% endif %}
 
       <a href="{{ post.url | url }}" class="post-title-link">
         <h3 class="post-title">
@@ -26,13 +34,9 @@
       {% endif %}
 
       <div class="post-tags-row">
-        {% if post.data.tags %}
-          {% for tag in post.data.tags %}
-            {%- if tag != "posts" and tag != "projects" -%}
-              <a href="{{ '/tags/' | url }}{{ tag | slugify }}/" class="post-tag-chip">#{{ tag }}</a>
-            {%- endif -%}
-          {% endfor %}
-        {% endif %}
+        <time class="post-tag-chip" datetime="{{ post.date | htmlDateString }}">
+          {{ post.date | longDate }}
+        </time>
       </div>
     </div>
 
