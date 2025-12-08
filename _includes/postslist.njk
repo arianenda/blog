@@ -1,35 +1,41 @@
-<ul class="post-list">
+<ul class="post-list-revamped">
 {% for post in postslist | reverse %}
-  <li class="post-wrapper">
-    <div class="post-item">
+  <li class="post-item-card">
 
-      <div class="post-left-content">
+    {% if post.data.image %}
+    <div class="post-thumbnail-wrapper">
+      <img src="{{ post.data.image }}" alt="{{ post.data.title }}" class="post-thumbnail" loading="lazy">
+    </div>
+    {% endif %}
 
-        <a href="{{ post.url | url }}" class="post-title-link">
+    <div class="post-content-wrapper">
+      <time class="post-date-label" datetime="{{ post.date | htmlDateString }}">
+        {{ post.date | longDate }}
+      </time>
+
+      <a href="{{ post.url | url }}" class="post-title-link">
+        <h3 class="post-title">
           {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
-        </a>
-        <time class="post-date" datetime="{{ post.date | htmlDateString }}">
-          {{ post.date | htmlDateString }}
-        </time>
-      </div>
+        </h3>
+      </a>
 
-      <div class="post-tags-right">
+      {% if post.data.description %}
+        <p class="post-description">
+          {{ post.data.description }}
+        </p>
+      {% endif %}
+
+      <div class="post-tags-row">
         {% if post.data.tags %}
           {% for tag in post.data.tags %}
             {%- if tag != "posts" and tag != "projects" -%}
-              <a href="{{ '/tags/' | url }}{{ tag | slugify }}/" class="post-tag-sm">#{{ tag }}</a>
+              <a href="{{ '/tags/' | url }}{{ tag | slugify }}/" class="post-tag-chip">#{{ tag }}</a>
             {%- endif -%}
           {% endfor %}
         {% endif %}
-
-        {% if post.data.tech %}
-          {% for t in post.data.tech %}
-            <a href="{{ '/tags/' | url }}{{ t | slugify }}/" class="post-tag-sm">#{{ t }}</a>
-          {% endfor %}
-        {% endif %}
       </div>
-
     </div>
+
   </li>
 {% endfor %}
 </ul>

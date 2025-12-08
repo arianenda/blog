@@ -6,7 +6,7 @@ image: https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg
 date: Last Modified
 ---
 
-<div id="intro">
+<section id="intro">
 <p>
   Hi, my name is Athariq Evan Arianenda. I have a deep interest in cybersecurity and low-level systems. My passion lies in designing, building, and analyzing a defense mechanisms for both prevention and protection at the lowest levels of a systems including operating systems and networks.
 </p>
@@ -16,18 +16,18 @@ My personal site is a collection of my thoughts, opinions, ideas, and personal p
 <p> If you'd like to discuss about works and projects or just simply want to say hi, feel free to reach me at
 <a href="mailto:athariq@evanarianenda.com">athariq@evanarianenda.com</a>
 </p>
-</div>
+</section>
 
-<div id="posts">
+<section id="posts">
   <h2>Posts</h2>
+  <p class="section-description">A collection of articles, tutorials, and thoughts on cybersecurity, systems programming, and technology.</p>
   {% set postslist = collections.posts %}
   {% include "postslist.njk" %}
-</div>
+</section>
 
-<div id="projects">
+<section id="projects">
   <h2>Projects</h2>
+  <p class="section-description">Showcase of my open-source contributions, tools, and experiments in low-level systems and security.</p>
   {% set postslist = collections.projects %}
   {% include "postslist.njk" %}
-
-  // <p>See <a href="{{ '/projects/' | url }}">all projects</a>.</p>
-</div>
+</section>
